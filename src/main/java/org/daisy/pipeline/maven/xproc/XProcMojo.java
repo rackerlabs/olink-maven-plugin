@@ -15,7 +15,7 @@ import static org.daisy.pipeline.maven.xproc.utils.asURI;
  *
  * @goal olink
  */
-public class XProcMojo extends AbstractMojo {
+public class XProcMojo extends org.apache.maven.plugin.AbstractMojo {
 	
 	/**
 	 * Path to the pipeline
@@ -42,17 +42,33 @@ public class XProcMojo extends AbstractMojo {
 	 * @parameter default-value="olink.xml"
          */
         private String olinkManifest;
+        
+        
+    	protected static XProcEngine engine;
 
 	
 	public void execute() throws MojoExecutionException {
 
+		FileUtils.extractJaredDirectory("olink",XProcMojo.class,new File(mavenBuildDir + "/docbkx/cloud"));
+		
+		System.setProperty("com.xmlcalabash.saxon-configuration", mavenBuildDir + "/docbkx/cloud/olink/saxon-configuration.xml");
+		ClassLoader cl = AbstractMojo.class.getClassLoader();
+		try {
+			Class.forName("com.xmlcalabash.drivers.Main", false, cl);
+			engine = new Calabash(); }
+		catch(ClassNotFoundException e) {
+			try {
+				Class.forName("org.daisy.pipeline.xproc.connect.XProcClient", false, cl);
+				engine = new DaisyPipeline2(); }
+			catch (ClassNotFoundException ee) {
+				throw new RuntimeException("Could not find any XProc engines on the classpath."); }}
+		
 	    Map options=new HashMap<String, String>();
 	    options.put("mavenBuildDir",mavenBuildDir);
 	    options.put("olinkManifest",mavenPomdir + "/" + olinkManifest);
-
+	    
 		try {
-		        System.out.println("pipeline: " + pipeline); 
-			FileUtils.extractJaredDirectory("olink",XProcMojo.class,new File(mavenBuildDir + "/docbkx/cloud"));
+		    System.out.println("pipeline: " + pipeline); 
 			engine.run(asURI(pipeline), null, null, options, null);
 			System.out.println("Running XProc ..."); }
 		catch (Exception e) {
