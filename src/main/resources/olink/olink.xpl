@@ -30,7 +30,7 @@
 
   <!-- Output to file -->
   <p:store method="xml" ><!-- indent="true -->
-    <p:with-option name="href" select="concat(replace($mavenBuildDir,' ','%20'),'/olink.db')"/>
+    <p:with-option name="href" select="concat($mavenBuildDir,'/olink.db')"/>
   </p:store>
 
 </p:declare-step>

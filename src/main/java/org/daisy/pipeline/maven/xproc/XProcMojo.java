@@ -31,7 +31,7 @@ public class XProcMojo extends org.apache.maven.plugin.AbstractMojo {
 	 * @parameter default-value="${project.build.directory}"
 	 * @required
 	 */
-	private String mavenBuildDir;
+	private File mavenBuildDir;
 
         /**
 	 * @parameter default-value="${project.basedir}"
@@ -63,9 +63,9 @@ public class XProcMojo extends org.apache.maven.plugin.AbstractMojo {
 			catch (ClassNotFoundException ee) {
 				throw new RuntimeException("Could not find any XProc engines on the classpath."); }}
 		
-	    Map options=new HashMap<String, String>();
-	    options.put("mavenBuildDir",mavenBuildDir);
-	    options.put("olinkManifest",mavenPomdir + "/" + olinkManifest);
+	    Map<String, String> options=new HashMap<String, String>();
+	    options.put("mavenBuildDir", utils.asURI(mavenBuildDir));
+	    options.put("olinkManifest", utils.asURI(new File(mavenPomdir, olinkManifest)));
 	    
 		try {
 		    System.out.println("pipeline: " + pipeline); 
