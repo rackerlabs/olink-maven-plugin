@@ -56,12 +56,8 @@ public class XProcMojo extends org.apache.maven.plugin.AbstractMojo {
 		try {
 			Class.forName("com.xmlcalabash.drivers.Main", false, cl);
 			engine = new Calabash(); }
-		catch(ClassNotFoundException e) {
-			try {
-				Class.forName("org.daisy.pipeline.xproc.connect.XProcClient", false, cl);
-				engine = new DaisyPipeline2(); }
 			catch (ClassNotFoundException ee) {
-				throw new RuntimeException("Could not find any XProc engines on the classpath."); }}
+				throw new RuntimeException("Could not find any XProc engines on the classpath."); }
 		
 	    Map<String, String> options=new HashMap<String, String>();
 	    options.put("mavenBuildDir", utils.asURI(mavenBuildDir));
