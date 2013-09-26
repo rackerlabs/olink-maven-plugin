@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.rackspace.cloud.api</groupId>
   <artifactId>olink-maven-plugin</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1.1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <name>olink-maven-plugin</name>
 
@@ -81,6 +81,7 @@
     <url>https://github.com/rackerlabs/olink-maven-plugin/tree/master</url>
     <connection>scm:git:git://github.com/rackerlabs/olink-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:rackerlabs/olink-maven-plugin.git</developerConnection>
+    <tag>HEAD</tag>
   </scm>
 
   <profiles>
