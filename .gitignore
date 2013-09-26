@@ -1,3 +1,7 @@
 target
 .classpath
 .project
+
+# NetBeans user-specific build settings
+nbactions.xml
+nbactions-*.xml
