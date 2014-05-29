@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import static org.daisy.pipeline.maven.xproc.utils.asURI;
 
@@ -103,20 +104,30 @@ public class XProcMojo extends org.apache.maven.plugin.AbstractMojo {
 
                 for( String param : parameters.keySet() ) {
 
-                    System.out.println( " - " + param + ": " + parameters.get( param ) );
+                    System.out.println( " - " + param + ": " );
 
                     Map<String, String> map = new HashMap<String, String>();
                     params.put( param, map );
 
-                    String[] pair = parameters.get( param ).split( "=" );
+                    StringTokenizer tokenizer = new StringTokenizer( parameters.get( param ) );
 
-                    if( pair.length != 2 ) {
+                    while( tokenizer.hasMoreTokens() ) {
 
-                        throw new Exception( "The value of the '" + param
-                                                   + "' parameters value should be 2 strings separated by an '='." );
+                        String line = tokenizer.nextToken();
+
+                        String[] pair = line.split( "=" );
+
+                        if( pair.length != 2 ) {
+
+                            throw new Exception( "The value of the '" + param
+                                                       + "' '" + line + "' parameters value should be 2 strings separated by an '='." );
+                        }
+
+                        System.out.println( "   - " + line );
+
+                        map.put( pair[ 0 ], pair[ 1 ] );
+
                     }
-
-                    map.put( pair[ 0 ], pair[ 1 ] );
                 }
             }
 
