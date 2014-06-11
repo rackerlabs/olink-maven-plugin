@@ -1,6 +1,7 @@
 target
 .classpath
 .project
+refresh-from-upstream.sh
 
 # NetBeans user-specific build settings
 nbactions.xml
