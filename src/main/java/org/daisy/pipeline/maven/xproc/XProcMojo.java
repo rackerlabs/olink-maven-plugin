@@ -60,6 +60,11 @@ public class XProcMojo extends org.apache.maven.plugin.AbstractMojo {
      */
     private String olinkManifest;
 
+    /**
+     * @parameter default-value="HE"
+     */
+    private String saxonEdition;
+
 
     protected static XProcEngine engine;
 
@@ -68,7 +73,7 @@ public class XProcMojo extends org.apache.maven.plugin.AbstractMojo {
 
 		FileUtils.extractJaredDirectory("olink",XProcMojo.class,new File(mavenBuildDir + "/docbkx/cloud"));
 		
-		System.setProperty("com.xmlcalabash.saxon-configuration", mavenBuildDir + "/docbkx/cloud/olink/saxon-configuration.xml");
+		System.setProperty("com.xmlcalabash.saxon-configuration", mavenBuildDir + "/docbkx/cloud/olink/saxon-configuration-" + saxonEdition + ".xml");
 		ClassLoader cl = AbstractMojo.class.getClassLoader();
 		try {
 			Class.forName("com.xmlcalabash.drivers.Main", false, cl);
