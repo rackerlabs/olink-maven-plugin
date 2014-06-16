@@ -1,21 +1,31 @@
 <?xml version="1.0"?>
 
-<p:declare-step xmlns:p="http://www.w3.org/ns/xproc" version="1.0"
+<p:declare-step xmlns:p="http://www.w3.org/ns/xproc" 
+    version="1.0"
 		xmlns:cx="http://xmlcalabash.com/ns/extensions">
 
-  <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
   <p:input port="parameters" kind="parameter" />
   <p:option name="mavenBuildDir"/>
   <p:option name="olinkManifest"/>
-  
-  <p:load>
+
+  <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
+
+  <p:load name="olinkxml">
     <p:with-option name="href" select="$olinkManifest"/>
   </p:load>
+  
+  <p:for-each xmlns:ol="http://docs.rackspace.com/olink">
+    <p:iteration-source select="/ol:books/ol:book"/>
+    <cx:message>
+      <p:with-option name="message" select="concat('Loading: ', resolve-uri(//@path, base-uri(.)))"/>
+    </cx:message>
+    <p:load>
+      <p:with-option name="href" select="resolve-uri(//@path, base-uri(.))"/>
+    </p:load>
+    <p:xinclude/>
+  </p:for-each>
 
-  <!-- XInclude the source XML Document -->
-  <p:xinclude>
-    <p:input port="source"/>
-  </p:xinclude>
+  <p:wrap-sequence wrapper="books" wrapper-namespace="http://docs.rackspace.com/olink" name="wrapit"/>
 
   <!-- Apply the Transform -->
   <p:xslt>

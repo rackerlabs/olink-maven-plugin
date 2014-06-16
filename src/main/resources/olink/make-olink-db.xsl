@@ -38,7 +38,7 @@
     <targetset> 
       <sitemap>	
 	<dir>
-	  <xsl:apply-templates select="ol:books/ol:book" mode="process-book"/>
+	  <xsl:apply-templates select="ol:books/*" mode="process-book"/>
 	</dir>
       </sitemap>
     </targetset>
@@ -46,11 +46,19 @@
   
   <xsl:template match="ol:book" mode="process-book">
     <xsl:variable name="path" select="@path"/>
-    <xsl:variable name="book" select="document(resolve-uri($path, base-uri(.)))"/>
+    <xsl:variable name="book" select="doc(resolve-uri($path, base-uri(.)))"/>
    
     <document targetdoc="{$book/*/@xml:id}" 
 	      baseuri="index.html"> 
       <xsl:apply-templates select="$book" mode="olink.mode"/>
+    </document>
+  </xsl:template>
+  
+  <xsl:template match="db:*" mode="process-book" xmlns:db="http://docbook.org/ns/docbook">
+    
+    <document targetdoc="{@xml:id}" 
+      baseuri="index.html"> 
+      <xsl:apply-templates select="self::*" mode="olink.mode"/>
     </document>
   </xsl:template>
 
