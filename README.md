@@ -11,12 +11,12 @@ This plugin takes as input a file named olink.xml in the same directory as your 
             <book path="src/docbkx/cf-releasenotes.xml"/>
      </books>
 
-In your project's pom, include the following in the <plugins> section of your pom.xml (where 1.1 is the latest release version of the olink-maven-plugin):
+In your project's pom, include the following in the <plugins> section of your pom.xml (where 1.2.6 is the latest release version of the olink-maven-plugin):
 
       <plugin>
         <groupId>com.rackspace.cloud.api</groupId>
         <artifactId>olink-maven-plugin</artifactId>
-        <version>1.1</version>
+        <version>1.2.6</version>
         <executions>
           <execution>
             <phase>initialize</phase>
